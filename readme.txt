@@ -49,3 +49,7 @@ apigClient.post({}, body, { headers: { 'Content-Type': 'application/json'}})
 
         
 </script>
+
+
+
+'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'
