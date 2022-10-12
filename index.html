@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Company</title>
     <link rel="stylesheet" href="style.css">
+
+    <link rel="shortcut icon" href="#">
 </head>
 <body>
     <div class="container">
@@ -14,7 +16,7 @@
             <div class="user-details">
                 <div class="input-box">
                     <span class="details">First Name</span>
-                    <input id='firstname' type="text" placeholder="First Name" required>
+                    <input id="firstname" type="text" placeholder="First Name" required>
                 </div>
                 <div class="input-box">
                     <span class="details">Last Name</span>
@@ -22,7 +24,7 @@
                 </div>
                 <div class="input-box">
                     <span class="details">Salary</span>
-                    <input id='salary' type="text" placeholder="Salary" required>
+                    <input id="salary" type="text" placeholder="Salary" required>
                 </div>
             </div>
             <div class="button">
@@ -30,9 +32,53 @@
             </div>
         </form>
     </div>
+
+    <script type="text/javascript" src="apiGateway-js-sdk/lib/axios/dist/axios.standalone.js"></script>
+    <script type="text/javascript" src="apiGateway-js-sdk/lib/CryptoJS/rollups/hmac-sha256.js"></script>
+    <script type="text/javascript" src="apiGateway-js-sdk/lib/CryptoJS/rollups/sha256.js"></script>
+    <script type="text/javascript" src="apiGateway-js-sdk/lib/CryptoJS/components/hmac.js"></script>
+    <script type="text/javascript" src="apiGateway-js-sdk/lib/CryptoJS/components/enc-base64.js"></script>
+    <script type="text/javascript" src="apiGateway-js-sdk/lib/url-template/url-template.js"></script>
+    <script type="text/javascript" src="apiGateway-js-sdk/lib/apiGatewayCore/sigV4Client.js"></script>
+    <script type="text/javascript" src="apiGateway-js-sdk/lib/apiGatewayCore/apiGatewayClient.js"></script>
+    <script type="text/javascript" src="apiGateway-js-sdk/lib/apiGatewayCore/simpleHttpClient.js"></script>
+    <script type="text/javascript" src="apiGateway-js-sdk/lib/apiGatewayCore/utils.js"></script>
+    <script type="text/javascript" src="apiGateway-js-sdk/apigClient.js"></script>
+
     <script>
         function submitData() {
-            var data = document.getElementById('form').data;
+            // var data = document.getElementById('form').data;
+            var apigClient = apigClientFactory.newClient();
+            
+            let firstname = document.getElementById("firstname").value;
+            let lastname = document.getElementById("lastname").value;
+            let salary = document.getElementById("salary").value;
+
+            console.log({firstname: firstname, lastname: lastname, salary: salary});
+
+            
+            var params = {
+                //This is where any header, path, or querystring request params go. The key is the parameter named as defined in the API
+            };
+
+            var body = {
+                //This is where you define the body of the request
+                "firstname": firstname, "lastname": lastname, "salary": salary
+            };
+
+            // var body = `{"firstname": ${firstname},"lastname":${lastname},"salary":${salary}}`;
+
+            // var payload_json = JSON.stringify(body);
+
+            apigClient.rootPost(null, body)
+                .then(function(result){
+                    //This is where you would put a success callback
+                    console.log({result});
+                }).catch( function(result){
+                    //This is where you would put an error callback
+                    console.log({err:result.message, result:result.body});
+            });
+
         }
     </script>
 </body>
